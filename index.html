@@ -159,6 +159,19 @@
             justify-content: center;
             align-items: center;
         }
+
+        /* Flexbox para los inputs */
+        .input-container {
+            display: flex;
+            gap: 10px; /* Espacio entre los inputs */
+        }
+
+        .input-container input {
+            flex: 1;
+            font-size: 30px;
+            font-weight: 900;
+            text-align: center;
+        }
     </style>
 
     <!-- Bootstrap CSS -->
@@ -194,13 +207,13 @@
                 <div class="col-sm">
                     <div class="card p-4" id="set-numbers">
                         <h2 class="mb-4">Establecer secuencia</h2>
-                        <div class="mb-3">
-                            <input type="password" id="num1" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'num2')" onkeypress="checkEnter(event, setSequence)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
-                            <input type="password" id="num2" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'num3')" onkeypress="checkEnter(event, setSequence)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
-                            <input type="password" id="num3" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'num4')" onkeypress="checkEnter(event, setSequence)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
-                            <input type="password" id="num4" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'num5')" onkeypress="checkEnter(event, setSequence)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
-                            <input type="password" id="num5" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'num6')" onkeypress="checkEnter(event, setSequence)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
-                            <input type="password" id="num6" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'none')" onkeypress="checkEnter(event, setSequence)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
+                        <div class="mb-3 input-container">
+                            <input type="password" id="num1" class="form-control" maxlength="1" oninput="moveToNext(this, 'num2')" onkeypress="checkEnter(event, setSequence)">
+                            <input type="password" id="num2" class="form-control" maxlength="1" oninput="moveToNext(this, 'num3')" onkeypress="checkEnter(event, setSequence)">
+                            <input type="password" id="num3" class="form-control" maxlength="1" oninput="moveToNext(this, 'num4')" onkeypress="checkEnter(event, setSequence)">
+                            <input type="password" id="num4" class="form-control" maxlength="1" oninput="moveToNext(this, 'num5')" onkeypress="checkEnter(event, setSequence)">
+                            <input type="password" id="num5" class="form-control" maxlength="1" oninput="moveToNext(this, 'num6')" onkeypress="checkEnter(event, setSequence)">
+                            <input type="password" id="num6" class="form-control" maxlength="1" oninput="moveToNext(this, 'none')" onkeypress="checkEnter(event, setSequence)">
                         </div>
                         <button class="btn btn-primary w-100" onclick="setSequence()">Establecer Secuencia</button>
                     </div>
@@ -209,13 +222,13 @@
                 <div class="col-sm">
                     <div class="card p-4" id="guess-numbers" style="display:none;">
                         <h2 class="mb-4">Adivina la secuencia:</h2>
-                        <div class="mb-3">
-                            <input type="text" id="gnum1" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'gnum2')" onkeypress="checkEnter(event, checkGuess)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
-                            <input type="text" id="gnum2" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'gnum3')" onkeypress="checkEnter(event, checkGuess)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
-                            <input type="text" id="gnum3" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'gnum4')" onkeypress="checkEnter(event, checkGuess)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
-                            <input type="text" id="gnum4" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'gnum5')" onkeypress="checkEnter(event, checkGuess)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
-                            <input type="text" id="gnum5" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'gnum6')" onkeypress="checkEnter(event, checkGuess)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
-                            <input type="text" id="gnum6" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'none')" onkeypress="checkEnter(event, checkGuess)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
+                        <div class="mb-3 input-container">
+                            <input type="text" id="gnum1" class="form-control" maxlength="1" oninput="moveToNext(this, 'gnum2')" onkeypress="checkEnter(event, checkGuess)">
+                            <input type="text" id="gnum2" class="form-control" maxlength="1" oninput="moveToNext(this, 'gnum3')" onkeypress="checkEnter(event, checkGuess)">
+                            <input type="text" id="gnum3" class="form-control" maxlength="1" oninput="moveToNext(this, 'gnum4')" onkeypress="checkEnter(event, checkGuess)">
+                            <input type="text" id="gnum4" class="form-control" maxlength="1" oninput="moveToNext(this, 'gnum5')" onkeypress="checkEnter(event, checkGuess)">
+                            <input type="text" id="gnum5" class="form-control" maxlength="1" oninput="moveToNext(this, 'gnum6')" onkeypress="checkEnter(event, checkGuess)">
+                            <input type="text" id="gnum6" class="form-control" maxlength="1" oninput="moveToNext(this, 'none')" onkeypress="checkEnter(event, checkGuess)">
                         </div>
                         <button class="btn btn-primary w-100" onclick="checkGuess()">Adivinar</button>
                     </div>
@@ -227,6 +240,7 @@
     </div>
 
     <!-- Confetti Container -->
+    <div class="confetti" id="confetti"></div>
 
     <script>
         let secretSequence = [];
