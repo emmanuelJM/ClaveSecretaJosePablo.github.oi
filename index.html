@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Adivina en número 2</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adivina la Secuencia</title>
+    <style>
+        /* Otros estilos */
+
+        .sequence {
+            background-color: #F7DC9F;
+            color: white;
+            height: 60px;
+            border-radius: 5px;
+            font-size: 30px;
+            font-weight: 900;
+            text-align: center;
+            letter-spacing: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-primary:hover {
+            background-color: #D79F1F !important;
+        }
+
+        .btn-primary {
+            --bs-btn-bg: #EFB123 !important;
+            --bs-btn-border-color: #EFB123 !important;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .d-inline-block {
+            margin: 1px;
+        }
+
+        .card {
+            margin: 20px 0;
+        }
+
+        .attempt {
+            background-color: #f0f0f0;
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .attempt .correct-guess {
+            color: green;
+        }
+
+        .attempt .incorrect-guess {
+            color: red;
+        }
+
+        .winner span {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .winner .correct-guess {
+            color: white; /* Color blanco para todos los números */
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .main-content {
+            flex: 1;
+        }
+
+        .attempts {
+            width: 300px;
+            margin-left: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: flex-end;
+            overflow-y: auto;
+        }
+
+        @keyframes revealCorrect {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        #game-over-message {
+            color: red;
+            font-size: 35px;
+            font-weight: bold;
+            text-align: center;
+            display: none; /* Ocultar el mensaje por defecto */
+        }
+
+        #win-message {
+            color: green;
+            font-size: 35px;
+            font-weight: bold;
+            text-align: center;
+            display: none; /* Ocultar el mensaje por defecto */
+        }
+
+        .confetti {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff0;
+            opacity: 0;
+            transform: rotate(45deg);
+        }
+
+        /* Nuevo estilo para centrar la imagen */
+        .center-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+    <div class="container my-5">
+        <div class="main-content">
+            <div class="row">
+                <div class="col center-image">
+                    <img src="https://i.postimg.cc/Sxwzdkgw/Frame-30.png" alt="Furry white cat sitting on a wall" style="width: 40%; margin: 0; position: relative;">
+                </div>
+                <div class="col">
+                    <div class="card p-4">
+                        <h2 class="mb-4">Secuencia Ganadora</h2>
+                        <div class="winner sequence hidden" id="secret-sequence">
+                            <span id="secret-num1">X</span>
+                            <span id="secret-num2">X</span>
+                            <span id="secret-num3">X</span>
+                            <span id="secret-num4">X</span>
+                            <span id="secret-num5">X</span>
+                            <span id="secret-num6">X</span>
+                        </div>
+                        <div id="game-over-message">Perdiste</div>
+                        <div id="win-message">¡Ganaste!</div>
+                    </div>
+                    <button class="btn btn-danger w-100 mt-4" id="restart-btn" style="display:none;" onclick="restartGame()">Reiniciar</button>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Columna 1: Establecer Secuencia -->
+                <div class="col-sm">
+                    <div class="card p-4" id="set-numbers">
+                        <h2 class="mb-4">Establecer secuencia</h2>
+                        <div class="mb-3">
+                            <input type="password" id="num1" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'num2')" onkeypress="checkEnter(event, setSequence)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
+                            <input type="password" id="num2" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'num3')" onkeypress="checkEnter(event, setSequence)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
+                            <input type="password" id="num3" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'num4')" onkeypress="checkEnter(event, setSequence)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
+                            <input type="password" id="num4" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'num5')" onkeypress="checkEnter(event, setSequence)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
+                            <input type="password" id="num5" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'num6')" onkeypress="checkEnter(event, setSequence)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
+                            <input type="password" id="num6" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'none')" onkeypress="checkEnter(event, setSequence)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
+                        </div>
+                        <button class="btn btn-primary w-100" onclick="setSequence()">Establecer Secuencia</button>
+                    </div>
+                </div>
+                <!-- Columna 2: Adivina la Secuencia -->
+                <div class="col-sm">
+                    <div class="card p-4" id="guess-numbers" style="display:none;">
+                        <h2 class="mb-4">Adivina la secuencia:</h2>
+                        <div class="mb-3">
+                            <input type="text" id="gnum1" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'gnum2')" onkeypress="checkEnter(event, checkGuess)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
+                            <input type="text" id="gnum2" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'gnum3')" onkeypress="checkEnter(event, checkGuess)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
+                            <input type="text" id="gnum3" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'gnum4')" onkeypress="checkEnter(event, checkGuess)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
+                            <input type="text" id="gnum4" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'gnum5')" onkeypress="checkEnter(event, checkGuess)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
+                            <input type="text" id="gnum5" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'gnum6')" onkeypress="checkEnter(event, checkGuess)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
+                            <input type="text" id="gnum6" class="form-control d-inline-block" maxlength="1" oninput="moveToNext(this, 'none')" onkeypress="checkEnter(event, checkGuess)" style="width: 15%;font-size: 30px;font-weight: 900;text-align: center;">
+                        </div>
+                        <button class="btn btn-primary w-100" onclick="checkGuess()">Adivinar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Columna Derecha: Intentos -->
+        <div class="attempts" id="attempts" style="display:none;"></div>
+    </div>
+
+    <!-- Confetti Container -->
+    <div class="confetti" id="confetti"></div>
+
+    <script>
+        let secretSequence = [];
+        let attempts = [];
+        const maxAttempts = 15; // Número máximo de intentos
+        let attemptCount = 0;
+
+        function setSequence() {
+            secretSequence = [
+                document.getElementById('num1').value,
+                document.getElementById('num2').value,
+                document.getElementById('num3').value,
+                document.getElementById('num4').value,
+                document.getElementById('num5').value,
+                document.getElementById('num6').value
+            ];
+            document.getElementById('set-numbers').style.display = 'none';
+            document.getElementById('guess-numbers').style.display = 'block';
+            document.getElementById('secret-sequence').classList.remove('hidden');
+            clearGuessFields(); // Limpiar los campos de entrada de adivinanza al establecer la secuencia
+        }
+
+        function checkGuess() {
+            if (attemptCount >= maxAttempts) {
+                return; // No permitir más intentos después del límite
+            }
+
+            const guessSequence = [
+                document.getElementById('gnum1').value,
+                document.getElementById('gnum2').value,
+                document.getElementById('gnum3').value,
+                document.getElementById('gnum4').value,
+                document.getElementById('gnum5').value,
+                document.getElementById('gnum6').value
+            ];
+
+            let guessText = '';
+
+            for (let i = 0; i < 6; i++) {
+                const guessNum = guessSequence[i];
+                const isCorrect = guessNum === secretSequence[i];
+                
+                guessText += `<span class="${isCorrect ? 'correct-guess' : 'incorrect-guess'}">${guessNum}</span>`;
+                
+                if (isCorrect) {
+                    document.getElementById(`secret-num${i + 1}`).innerText = guessNum; // Revelar número correcto en Secuencia Ganadora
+                }
+            }
+
+            const attemptElement = document.createElement('div');
+            attemptElement.classList.add('attempt');
+            attemptElement.innerHTML = `<strong>Intento:</strong> ${guessText}`;
+            document.getElementById('attempts').insertBefore(attemptElement, document.getElementById('attempts').firstChild);
+            document.getElementById('attempts').style.display = 'block';
+
+            // Limpiar campos de entrada después de cada intento
+            clearGuessFields();
+
+            attemptCount++; // Incrementar el contador de intentos
+
+            // Verificar si el jugador adivinó correctamente
+            if (JSON.stringify(guessSequence) === JSON.stringify(secretSequence)) {
+                document.getElementById('secret-sequence').classList.remove('hidden');
+                document.getElementById('restart-btn').style.display = 'block';
+                document.getElementById('guess-numbers').style.display = 'none';
+                document.getElementById('win-message').style.display = 'block'; // Mostrar mensaje de "Ganaste"
+                disableInputs(); // Deshabilitar los inputs
+
+                // Mostrar confeti
+                showConfetti();
+            } else if (attemptCount >= maxAttempts) {
+                // Mostrar mensaje de pérdida, revelar la secuencia y ocultar el botón de reinicio
+                document.getElementById('secret-sequence').classList.remove('hidden');
+                document.getElementById('game-over-message').style.display = 'block'; // Mostrar mensaje de "Perdiste"
+                document.getElementById('restart-btn').style.display = 'block';
+                document.getElementById('guess-numbers').style.display = 'none';
+
+                // Revelar la secuencia secreta en la sección correspondiente
+                for (let i = 0; i < 6; i++) {
+                    document.getElementById(`secret-num${i + 1}`).innerText = secretSequence[i];
+                }
+            }
+        }
+
+        function clearGuessFields() {
+            for (let i = 1; i <= 6; i++) {
+                document.getElementById(`gnum${i}`).value = '';
+            }
+        }
+
+        // Función para mover el foco al siguiente input
+        function moveToNext(currentInput, nextInputId) {
+            if (currentInput.value.length === currentInput.maxLength) {
+                if (nextInputId !== 'none') {
+                    document.getElementById(nextInputId).focus();
+                }
+            }
+        }
+
+        // Función para verificar si se presionó Enter
+        function checkEnter(event, actionFunction) {
+            if (event.key === 'Enter') {
+                actionFunction();
+            }
+        }
+
+        function restartGame() {
+            secretSequence = [];
+            attempts = [];
+            attemptCount = 0; // Resetear el contador de intentos
+            document.getElementById('set-numbers').style.display = 'block';
+            document.getElementById('guess-numbers').style.display = 'none';
+            document.getElementById('restart-btn').style.display = 'none';
+            document.getElementById('secret-sequence').classList.add('hidden');
+            document.getElementById('game-over-message').style.display = 'none'; // Ocultar el mensaje de "Perdiste"
+            document.getElementById('win-message').style.display = 'none'; // Ocultar el mensaje de "Ganaste"
+            document.getElementById('attempts').innerHTML = '';
+
+            // Resetear los campos de la secuencia secreta
+            for (let i = 1; i <= 6; i++) {
+                const secretNumElement = document.getElementById(`secret-num${i}`);
+                secretNumElement.innerText = 'X';
+                document.getElementById(`num${i}`).value = ''; // Limpiar los campos
+                document.getElementById(`gnum${i}`).value = ''; // Limpiar los campos de adivinanza
+                document.getElementById(`gnum${i}`).disabled = false; // Habilitar los campos de adivinanza
+            }
+
+            // Limpiar confeti
+            document.getElementById('confetti').innerHTML = '';
+        }
+
+        function disableInputs() {
+            for (let i = 1; i <= 6; i++) {
+                document.getElementById(`gnum${i}`).disabled = true;
+            }
+        }
+
+        function showConfetti() {
+            const confettiContainer = document.getElementById('confetti');
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti-piece');
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.top = `${Math.random() * 100}%`;
+                confetti.style.opacity = '1';
+                confetti.style.transform = `translateY(${Math.random() * 100}px) rotate(${Math.random() * 360}deg)`;
+                confetti.style.animation = `revealCorrect ${Math.random() * 3 + 2}s ease-in-out forwards`;
+                confettiContainer.appendChild(confetti);
+            }
+        }
+    </script>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
+<!-- partial -->
+  
+</body>
+</html>
