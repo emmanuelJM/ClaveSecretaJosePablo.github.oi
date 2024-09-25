@@ -1,0 +1,291 @@
+#contador {
+    text-align: center;
+    font-size: 48px;
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 5px solid #EFB123;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    color: #EFB123;
+    margin-top: 20px;
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 18px;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    button#iniciar {
+        width: 100%;
+        border-radius: 10px;
+        background-color: #EFB123;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    button#iniciar {
+        width: 100%;
+    }
+
+.form-control {
+    border: 2px solid #EFB123 !important;
+}
+
+.winner span {
+    font-size: 70px !important;
+}
+
+.winner span {
+    font-size: 35px;
+}
+
+.sequence {
+    background-color: #F7DC9F;
+    color: #000;
+    height: 60px;
+    border-radius: 5px;
+    text-align: center;
+    letter-spacing: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-primary:hover {
+    background-color: #D79F1F !important;
+}
+
+.btn-primary {
+    --bs-btn-bg: #EFB123 !important;
+    --bs-btn-border-color: #EFB123 !important;
+}
+
+h2 {
+    text-align: center;
+}
+
+.d-inline-block {
+    margin: 1px;
+}
+
+.card {
+    margin: 20px 0;
+}
+
+.attempt {
+    background-color: #f0f0f0;
+    margin: 5px 0;
+    padding: 5px;
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 27px;
+    font-weight: bold;
+    display: flex;
+    justify-content: flex-end;
+}
+
+    .attempt .correct-guess {
+        color: green;
+    }
+
+    .attempt .incorrect-guess {
+        color: red;
+    }
+
+.winner span {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.winner .correct-guess {
+    color: white; /* Color blanco para todos los números */
+}
+
+.container {
+    display: flex;
+}
+
+.main-content {
+    flex: 1;
+}
+
+.attempts {
+    margin-top: 1rem;
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    overflow-y: auto;
+}
+
+div#lost-turn-message {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+@keyframes revealCorrect {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+#game-over-message {
+    color: red;
+    font-size: 35px;
+    font-weight: bold;
+    text-align: center;
+    display: none; /* Ocultar el mensaje por defecto */
+}
+
+#win-message {
+    color: green;
+    font-size: 35px;
+    font-weight: bold;
+    text-align: center;
+    display: none; /* Ocultar el mensaje por defecto */
+}
+
+/* Nuevo estilo para centrar la imagen */
+.center-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}  
+
+body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f9f9f9;
+            margin: 20px;
+        }
+
+        #contador {
+            text-align: center;
+            font-size: 48px;
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 5px solid #EFB123;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            color: #EFB123;
+            margin-top: 20px;
+        }
+
+        button {
+            width: 100%;
+            border-radius: 10px;
+            background-color: #EFB123 !important;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #D79F1F !important;
+        }
+
+        .form-control {
+            border: 2px solid #EFB123 !important;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        .resultado-adivinado {
+    display: inline-block;
+    width: 50px;
+    margin: 0 2px;
+    padding: 5px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+        input {
+            width: 15.8%;
+            font-size: 24px;
+            text-align: center;
+            margin: 0 5px;
+            border: 2px solid #EFB123;
+            border-radius: 5px;
+            outline: none;
+            padding: 10px;
+            background-color: #ffffff;
+        }
+
+        #resultado {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+
+#resultado {
+    background-color: #F7DC9F;
+    color: #000;
+    height: 60px;
+    border-radius: 5px;
+    text-align: center;
+    letter-spacing: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+        .sequence {
+            background-color: #F7DC9F;
+            color: #000;
+            height: 60px;
+            border-radius: 5px;
+            text-align: center;
+            letter-spacing: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+#guardar, #limpiar {
+    width: 100% !important;
+    margin-top: 1rem;
+}
+
+#adivinar{
+    margin: 1rem 0;
+}
